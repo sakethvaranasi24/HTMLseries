@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KL University</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(120deg, #FCF7EB 0%, #F5EDD5 60%, #D1C2E0 100%);
+      /* Beige & purple gradient background */
+      overflow-x: hidden;
+      color: #23263b;
+      position: relative;
+    }
+    #particles {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      top: 0; left: 0;
+      pointer-events: none;
+      background: transparent;
+    }
+    .hero {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding-top: 5em;
+      z-index: 1;
+    }
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.8em;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #8757A0;
+      text-shadow: 0 8px 48px #bb9ebd33;
+      margin-bottom: .31em;
+      opacity: 0;
+      transform: translateY(30px) scale(0.98);
+      animation: fadeInUp 1.1s 0.22s cubic-bezier(.7,.1,.3,1.2) forwards;
+    }
+    .hero-desc {
+      font-size: 1.22em;
+      color: #4e5c6d;
+      max-width: 520px;
+      line-height: 1.6;
+      text-align: center;
+      margin-bottom: 2em;
+      opacity: 0;
+      animation: fadeInUp 1.1s 0.45s cubic-bezier(.7,.1,.3,1.2) forwards;
+    }
+    .hero-btn {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.16em;
+      padding: 1em 2.5em;
+      background: linear-gradient(97deg, #DD9FF6 35%, #B09FFF 100%);
+      color: #fff;
+      border: none;
+      border-radius: 48px;
+      box-shadow: 0 2px 18px #BB9EBD44;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1.3em;
+      opacity: 0;
+      transform: scale(0.92);
+      animation: fadeInUp 1.2s 0.72s cubic-bezier(.7,.1,.3,1.2) forwards;
+      transition: box-shadow 0.15s, transform 0.18s, background 0.16s;
+    }
+    .hero-btn:hover {
+      box-shadow: 0 6px 36px #bb9ebdad;
+      transform: scale(1.05) translateY(-2px);
+      background: linear-gradient(97deg, #8757A0 20%, #ECD1FE 99%);
+    }
+    .hero-shapes {
+      position: absolute; left: 0; right: 0; bottom: 10vh;
+      width: 100vw;
+      height: 180px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .floating-shape {
+      position: absolute;
+      width: 54px; height: 54px;
+      border-radius: 12px 44px 24px 39px/44px 24px 39px 12px;
+      filter: blur(4px);
+      opacity: 0.2;
+      will-change: transform;
+      animation: floatxy 5.6s infinite ease-in-out;
+    }
+    .floating-shape.shape1 { background: #A285F7; left: 12vw; top: 65px; animation-delay: 0.3s; }
+    .floating-shape.shape2 { background: #E8E4CF; left: 68vw; top: 5px; animation-delay: 1.1s; width:38px; height: 38px;}
+    .floating-shape.shape3 { background: #F7F3EA; left: 41vw; top: 96px; animation-delay: 2s; width:36px;}
+    @keyframes floatxy {
+      0% { transform: translateY(0) scale(1) rotate(-2deg);}
+      40% { transform: translateY(-18px) scale(1.09) rotate(11deg);}
+      80% { transform: translateY(8px) scale(0.97) rotate(-12deg);}
+      100% { transform: translateY(0) scale(1) rotate(-2deg);}
+    }
+    .main-sections {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 3em 6vw 2em 6vw;
+      position: relative;
+      z-index: 1;
+    }
+    .card-section {
+      background: rgba(255,255,255,0.91);
+      box-shadow: 0 8px 32px #ccb2e033;
+      border-radius: 22px;
+      padding: 2.2em 2em 2em 2em;
+      min-width: 300px;
+      max-width: 350px;
+      flex: 1 1 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: translateY(36px) scale(0.98);
+      animation: fadeInCard 1.05s cubic-bezier(.72, .15, .35, 1.15) forwards;
+    }
+    .card-section:nth-child(1) { animation-delay: .35s; }
+    .card-section:nth-child(2) { animation-delay: .52s; }
+    .card-section:nth-child(3) { animation-delay: .68s; }
+    @keyframes fadeInCard {
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.41em;
+      font-weight: 600;
+      color: #8757A0;
+      margin-bottom: 16px;
+      letter-spacing: 0.02em;
+      animation: fadeInUp 0.5s 0.17s forwards;
+      opacity: 0;
+    }
+    .card-section.visible .card-title { opacity: 1; }
+    .card-content {
+      font-size: 1.04em;
+      color: #443b5e;
+      margin-bottom: 9px;
+      padding-left: 2px;
+      animation: fadeInUp 0.6s 0.36s forwards;
+      opacity: 0;
+    }
+    .card-section.visible .card-content { opacity: 1; }
+    .program-list, .news-list, .event-list { margin: 0; padding: 0; list-style: none; }
+    .program-list li, .news-list li, .event-list li {
+      margin: .37em 0;
+      padding: 0 0 0 .15em;
+      line-height: 1.4;
+      opacity: 0.78;
+      transform: translateX(-16px);
+      animation: fadeListIn 0.48s cubic-bezier(.51,.08,.35,1.15) forwards;
+    }
+    .program-list li { animation-delay: 0.13s;}
+    .news-list li { animation-delay: 0.16s;}
+    .event-list li { animation-delay: 0.19s;}
+    .card-section.visible .program-list li,
+    .card-section.visible .news-list li,
+    .card-section.visible .event-list li { opacity: 1; transform: none; }
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes fadeListIn {
+      to { opacity: 0.85; transform: none; }
+    }
+    .card-btn {
+      margin-top: 1em;
+      padding: 0.67em 1.5em;
+      background: linear-gradient(95deg, #B09FFF 10%, #DD9FF6 100%);
+      border: none;
+      color: #fff;
+      border-radius: 22px;
+      font-weight: 600;
+      box-shadow: 0 3px 18px #b598c933;
+      font-size: 1em;
+      cursor: pointer;
+      letter-spacing: .01em;
+      transition: box-shadow 0.14s, transform 0.13s, background 0.18s;
+    }
+    .card-btn:hover {
+      box-shadow: 0 5px 28px #8757A077;
+      transform: scale(1.05);
+      background: linear-gradient(97deg, #8757A0 20%, #EAD6F7 98%);
+    }
+
+    /* Modal overlay */
+    #modalOverlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      overflow-y: auto;
+      padding: 2em 0;
+    }
+    #modalOverlay.active {
+      display: flex;
+    }
+
+    /* Modal container */
+    .modal {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      max-width: 400px;
+      width: 90vw;
+      padding: 2em 2.5em 3em;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.18);
+      position: relative;
+      font-family: 'Montserrat', sans-serif;
+      color: #333;
+      animation: modalFadeIn 0.3s ease forwards;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal h2 {
+      margin-top: 0;
+      font-weight: 700;
+      margin-bottom: 1em;
+      font-size: 1.8em;
+      color: #8757A0;
+      text-align: center;
+      user-select: none;
+    }
+
+    /* Close button */
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      font-size: 1.6em;
+      font-weight: 700;
+      color: #8757A0;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.2s;
+    }
+    .modal-close:hover {
+      color: #b59bd4;
+    }
+
+    /* Tabs */
+    .form-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.8em;
+      gap: 1.6em;
+      user-select: none;
+    }
+    .form-tab {
+      padding: 0.35em 1em;
+      font-weight: 600;
+      font-size: 1.05em;
+      cursor: pointer;
+      border-radius: 18px;
+      color: #8757A0;
+      background: #f0eaff;
+      transition: background 0.3s, color 0.3s;
+      box-shadow: 0 4px 16px #b9aeeab8;
+    }
+    .form-tab.active,
+    .form-tab:hover {
+      background: #8757a030;
+      color: #5a3c75;
+      box-shadow: 0 6px 20px #9c87cbbf;
+    }
+
+    /* Form styles */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.3em;
+    }
+    .input-group {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    .input-field {
+      width: 85%;
+      padding: 1em 1.1em 1em 1.1em;
+      border-radius: 8px;
+      font-size: 1em;
+      border: 2px solid #b9aeea;
+      outline: none;
+      background: #f7f6ff;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      color: #502e7e;
+      font-family: 'Roboto', sans-serif;
+    }
+    .input-field:focus {
+      border-color: #8757A0;
+      box-shadow: 0 0 8px #aa85d4cc;
+      background: #fff;
+    }
+    .input-label {
+      position: absolute;
+      pointer-events: none;
+      left: 16px;
+      top: 13px;
+      font-size: 1em;
+      color: #7b719a;
+      transition: 0.25s cubic-bezier(.6,.13,.4,1.15);
+      opacity: 1;
+      background: transparent;
+      padding: 0 4px;
+      user-select: none;
+    }
+    /* Floating label animation */
+    .input-field:focus + .input-label,
+    .input-field:not(:placeholder-shown) + .input-label {
+      top: -10px;
+      left: 12px;
+      font-size: 0.78em;
+      color: #8757A0;
+      font-weight: 600;
+      background: #f7f6ff;
+      box-shadow: 0 0 10px #aa85d466;
+      border-radius: 4px;
+      opacity: 1;
+    }
+
+    /* Submit button */
+    .submit-btn {
+      padding: 1em 0;
+      width: 80%;
+      max-width: 280px;
+      margin: 0 auto;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.12em;
+      font-weight: 700;
+      background: linear-gradient(97deg, #BB99E9 0%, #8757A0 90%);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 6px 28px #a37accaa;
+      transition: transform 0.22s ease, box-shadow 0.3s ease;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .submit-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 9px 38px #8557a055;
+    }
+    .submit-btn:active {
+      transform: scale(0.95);
+      box-shadow: 0 4px 18px #4d2f6aaa;
+    }
+
+    /* Small info text */
+    .form-info {
+      font-size: 0.9em;
+      color: #a592bb;
+      text-align: center;
+      margin-top: 0.3em;
+      user-select: none;
+    }
+    .form-info strong {
+      color: #8757A0;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .form-info strong:hover {
+      color: #ad7bdd;
+    }
+
+    /* Hide inactive forms */
+    .form-content {
+      display: none;
+      animation: fadeIn 0.35s ease forwards;
+    }
+    .form-content.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    /* Responsive */
+    @media (max-width: 460px) {
+      .hero-btn {
+        width: 85vw;
+      }
+      form {
+        gap: 1em;
+      }
+      .input-field {
+        width: 95%;
+      }
+      .submit-btn {
+        width: 95%;
+      }
+      .modal {
+        width: 95vw;
+        padding: 2em 1.5em 2.5em;
+      }
+    }
+
+    /* Fade In Up Keyframe used in hero */
+    @keyframes fadeInUp {
+      to {opacity: 1; transform: translateY(0) scale(1);}
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particles"></canvas>
+
+  <section class="hero">
+    <h1 class="hero-title">KL University</h1>
+    <div class="hero-desc">
+      A world-class institution where innovation meets excellence.<br />
+      Explore global programs, vibrant campus life, and a future of endless possibilities.
+    </div>
+    <button class="hero-btn" id="openModalBtn" aria-haspopup="dialog" aria-controls="modalOverlay">Apply Now</button>
+    <div class="hero-shapes">
+      <div class="floating-shape shape1"></div>
+      <div class="floating-shape shape2"></div>
+      <div class="floating-shape shape3"></div>
+    </div>
+  </section>
+
+  <section class="main-sections">
+    <div class="card-section">
+      <div class="card-title">Departments & Programs</div>
+      <div class="card-content">Discover a diverse range of fields:</div>
+      <ul class="program-list">
+        <li>Computer Science & Engineering</li>
+        <li>Business Administration</li>
+        <li>Design & Arts</li>
+        <li>Environmental Studies</li>
+        <li>International Relations</li>
+      </ul>
+      <button class="card-btn" onclick="alert('More Programs Coming Soon!')">Explore Programs</button>
+    </div>
+    <div class="card-section">
+      <div class="card-title">Campus News</div>
+      <div class="card-content">Stay updated with our latest highlights:</div>
+      <ul class="news-list">
+        <li>Robotics team wins global challenge</li>
+        <li>2025 Spring Research symposium</li>
+        <li>New digital library inaugurated</li>
+        <li>Summer innovation bootcamp announced</li>
+      </ul>
+      <button class="card-btn" onclick="alert('Read All News (Demo)')">Read More</button>
+    </div>
+    <div class="card-section">
+      <div class="card-title">Upcoming Events</div>
+      <div class="card-content">Don’t miss out on these happenings:</div>
+      <ul class="event-list">
+        <li>July 31: Open House Day</li>
+        <li>August 10: Alumni Meet</li>
+        <li>August 21: StartUp Fair</li>
+        <li>September: Cultural Fest & Marathon</li>
+      </ul>
+      <button class="card-btn" onclick="alert('Register for Events!')">View Events</button>
+    </div>
+  </section>
+
+  <!-- Modal overlay and dialog -->
+  <div id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+    <div class="modal" role="document">
+      <button class="modal-close" aria-label="Close modal" id="modalCloseBtn">&times;</button>
+      <h2 id="modalTitle">Apply Now</h2>
+      <nav class="form-tabs" aria-label="Form tabs">
+        <button class="form-tab active" id="tabSignIn" aria-selected="true" aria-controls="formSignIn" role="tab" tabindex="0">Sign In</button>
+        <button class="form-tab" id="tabSignUp" aria-selected="false" aria-controls="formSignUp" role="tab" tabindex="-1">Sign Up</button>
+      </nav>
+
+      <!-- Sign In form -->
+      <form id="formSignIn" class="form-content active" role="tabpanel" aria-labelledby="tabSignIn" novalidate>
+        <div class="input-group">
+          <input type="text" class="input-field" id="signin-username" name="signin-username" placeholder=" " required autocomplete="username" />
+          <label class="input-label" for="signin-username">Username</label>
+        </div>
+        <div class="input-group">
+          <input type="password" class="input-field" id="signin-password" name="signin-password" placeholder=" " required autocomplete="current-password" />
+          <label class="input-label" for="signin-password">Password</label>
+        </div>
+        <button type="submit" class="submit-btn">Sign In</button>
+        <div class="form-info">
+          Don't have an account? <strong id="toSignUp" tabindex="0">Create one</strong>
+        </div>
+      </form>
+
+      <!-- Sign Up form -->
+      <form id="formSignUp" class="form-content" role="tabpanel" aria-labelledby="tabSignUp" novalidate>
+        <div class="input-group">
+          <input type="text" class="input-field" id="signup-username" name="signup-username" placeholder=" " required autocomplete="username" />
+          <label class="input-label" for="signup-username">Username</label>
+        </div>
+        <div class="input-group">
+          <input type="email" class="input-field" id="signup-email" name="signup-email" placeholder=" " required autocomplete="email" />
+          <label class="input-label" for="signup-email">Email</label>
+        </div>
+        <div class="input-group">
+          <input type="password" class="input-field" id="signup-password" name="signup-password" placeholder=" " required autocomplete="new-password" />
+          <label class="input-label" for="signup-password">Password</label>
+        </div>
+        <button type="submit" class="submit-btn">Create Account</button>
+        <div class="form-info">
+          Already have an account? <strong id="toSignIn" tabindex="0">Sign In</strong>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Scroll-entrance animations for cards and lists
+    function elementInViewport(el) {
+      const rect = el.getBoundingClientRect();
+      return (rect.top < window.innerHeight * 0.90 && rect.bottom >= 0);
+    }
+    function checkSections() {
+      document.querySelectorAll('.card-section').forEach(card => {
+        if (elementInViewport(card)) card.classList.add('visible');
+      });
+    }
+    document.addEventListener('scroll', checkSections, {passive:true});
+    document.addEventListener('DOMContentLoaded', checkSections);
+    document.querySelectorAll('.card-section').forEach((card, idx) => {
+      setTimeout(() => {
+        card.classList.add('visible');
+      }, 850 + idx*170);
+    });
+
+    // Animated particles background
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles = [];
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      createParticles();
+    }
+    function createParticles() {
+      particles = [];
+      for(let i=0; i<16; i++) {
+        particles.push({
+          x: Math.random()*w,
+          y: Math.random()*h,
+          r: 15 + Math.random()*28,
+          dx: -.28 + Math.random()*1,
+          dy: -.35 + Math.random()*.9,
+          c: `hsla(${265+Math.random()*28},73%,93%,${0.16 + Math.random()*0.09})`
+        });
+      }
+    }
+    function drawParticles() {
+      ctx.clearRect(0, 0, w, h);
+      for(const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = p.c;
+        ctx.shadowColor = p.c;
+        ctx.shadowBlur = 18;
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        if(p.x < -p.r) p.x = w+p.r;
+        else if(p.x > w+p.r) p.x = -p.r;
+        if(p.y < -p.r) p.y = h+p.r;
+        else if(p.y > h+p.r) p.y = -p.r;
+      }
+      requestAnimationFrame(drawParticles);
+    }
+    window.addEventListener('resize', resize);
+    resize(); drawParticles();
+
+    // Modal Elements
+    const modalOverlay = document.getElementById('modalOverlay');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const tabSignIn = document.getElementById('tabSignIn');
+    const tabSignUp = document.getElementById('tabSignUp');
+    const formSignIn = document.getElementById('formSignIn');
+    const formSignUp = document.getElementById('formSignUp');
+    const toSignUp = document.getElementById('toSignUp');
+    const toSignIn = document.getElementById('toSignIn');
+
+    // Open modal
+    openModalBtn.addEventListener('click', () => {
+      modalOverlay.classList.add('active');
+      tabSignIn.focus();
+      showForm('signin');
+      trapFocus(modalOverlay);
+    });
+
+    // Close modal
+    modalCloseBtn.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal();
+    });
+
+    function closeModal() {
+      modalOverlay.classList.remove('active');
+      openModalBtn.focus();
+    }
+
+    // Switch forms function
+    function showForm(form) {
+      if (form === 'signin') {
+        tabSignIn.classList.add('active');
+        tabSignIn.setAttribute('aria-selected', 'true');
+        tabSignIn.tabIndex = 0;
+        tabSignUp.classList.remove('active');
+        tabSignUp.setAttribute('aria-selected', 'false');
+        tabSignUp.tabIndex = -1;
+        formSignIn.classList.add('active');
+        formSignUp.classList.remove('active');
+        formSignIn.querySelector('input').focus();
+      } else {
+        tabSignUp.classList.add('active');
+        tabSignUp.setAttribute('aria-selected', 'true');
+        tabSignUp.tabIndex = 0;
+        tabSignIn.classList.remove('active');
+        tabSignIn.setAttribute('aria-selected', 'false');
+        tabSignIn.tabIndex = -1;
+        formSignUp.classList.add('active');
+        formSignIn.classList.remove('active');
+        formSignUp.querySelector('input').focus();
+      }
+    }
+
+    // Tab click events
+    tabSignIn.addEventListener('click', () => showForm('signin'));
+    tabSignUp.addEventListener('click', () => showForm('signup'));
+
+    // "Create one" and "Already have an account?" click handlers
+    toSignUp.addEventListener('click', () => showForm('signup'));
+    toSignUp.addEventListener('keypress', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showForm('signup'); } });
+    toSignIn.addEventListener('click', () => showForm('signin'));
+    toSignIn.addEventListener('keypress', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showForm('signin'); } });
+
+    // Form submit handlers (placeholder behavior)
+    formSignIn.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Sign In submitted! Implement your authentication logic here.');
+      closeModal();
+    });
+    formSignUp.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Sign Up submitted! Implement your account creation logic here.');
+      closeModal();
+    });
+
+    // Focus trap inside modal for accessibility
+    function trapFocus(element) {
+      const focusableElements = element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      const firstFocusable = focusableElements[0];
+      const lastFocusable = focusableElements[focusableElements.length - 1];
+
+      function handleKey(e) {
+        if (e.key === 'Tab') {
+          if (e.shiftKey) {
+            if (document.activeElement === firstFocusable) {
+              e.preventDefault();
+              lastFocusable.focus();
+            }
+          } else {
+            if (document.activeElement === lastFocusable) {
+              e.preventDefault();
+              firstFocusable.focus();
+            }
+          }
+        }
+      }
+
+      element.addEventListener('keydown', handleKey);
+      // Remove the handler when modal is closed
+      const observer = new MutationObserver(() => {
+        if (!element.classList.contains('active')) {
+          element.removeEventListener('keydown', handleKey);
+          observer.disconnect();
+        }
+      });
+      observer.observe(element, {attributes: true});
+    }
+  </script>
+</body>
+</html>

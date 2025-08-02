@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Form</title>
+</head>
+<body>
+    <form>
+        <label for="full-name">Full Name:</label>
+        <input type="text" placeholder="Enter your full name" id="full-name" name="full-name" required>
+        <br><br>
+        <label for="email">Email:</label>
+        <input type="email" placeholder="Enter your email" id="email" name="email" required>
+        <br><br>
+        <label for="phone">Phone Number:</label>
+        <input type="tel" placeholder="Enter your phone number" id="phone" name="phone" required>
+        <br><br>
+        <label for="resume">Upload Resume:</label>
+        <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+        <br><br>
+        <label for="position">Position Applied For:</label>
+        <select id="position" name="position" required>
+            <option value="developer">Software Developer</option>
+            <option value="designer">UI/UX Designer</option>
+            <option value="manager">Project Manager</option>
+            <option value="analyst">Data Analyst</option>
+            <option value="sales">Sales Executive</option>
+            <option value="support">Customer Support</option>
+            <option value="HR">Human Resources</option>
+            <option value="marketing">Marketing Specialist</option>
+            <option value="Others">Other</option>
+        </select>
+        <br><br>
+        <label for="experience">Experience:</label>
+        <input type="number" min="0"  max="40">
+        <br><br>
+        <input type="submit" value="Submit Application">
+    </form>
+</body>
+</html>
